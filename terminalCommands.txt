@@ -1,4 +1,4 @@
-pytest -s -v .\tests\test_create_booking.py --html=reports\report.html
+pytest -s -v .\tests --html=reports\report.html
 
 
 git init

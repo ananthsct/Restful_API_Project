@@ -1,20 +1,28 @@
-2023-09-30 22:37:11,577: INFO: Starting the test case for creating a booking
-2023-09-30 22:37:11,577: INFO: Request URL: https://restful-booker.herokuapp.com/booking
-2023-09-30 22:37:13,662: INFO: Response data: {'bookingid': 2526, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
-2023-09-30 22:37:13,662: INFO: Booking created with ID: 2526
-2023-09-30 22:37:13,663: INFO: Test case for creating a booking completed
-2023-09-30 22:37:13,670: INFO: Starting the test case for creating a booking
-2023-09-30 22:37:13,670: INFO: Request URL: https://restful-booker.herokuapp.com/booking
-2023-09-30 22:37:14,671: INFO: Booking created with ID: 2536
-2023-09-30 22:37:14,671: INFO: Test case for creating a booking completed
-2023-09-30 22:37:14,676: INFO: Starting the test case for deleting a booking
-2023-09-30 22:37:14,677: INFO: Request URL: https://restful-booker.herokuapp.com/booking/2536
-2023-09-30 22:37:16,849: INFO: Test case for deleting a booking completed
-2023-09-30 22:37:16,857: INFO: Starting the test case for updating a booking
-2023-09-30 22:37:16,858: INFO: Request URL: https://restful-booker.herokuapp.com/booking
-2023-09-30 22:37:17,824: INFO: Booking created with ID: 2569
-2023-09-30 22:37:17,825: INFO: Test case for creating a booking completed
-2023-09-30 22:37:17,830: INFO: Starting the test case for updating a booking
-2023-09-30 22:37:17,830: INFO: Request URL: https://restful-booker.herokuapp.com/booking/2569
-2023-09-30 22:37:19,872: INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 1000, 'depositpaid': True, 'bookingdates': {'checkin': '2023-09-30', 'checkout': '2022-10-01'}, 'additionalneeds': 'Lunch'}
-2023-09-30 22:37:19,872: INFO: Test case for updating a booking completed
+2023-10-01 11:32:02,624: INFO: Starting the test case for creating a booking
+2023-10-01 11:32:02,624: INFO: Request URL: https://restful-booker.herokuapp.com/booking
+2023-10-01 11:32:04,597: INFO: Response data: {'bookingid': 5376, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
+2023-10-01 11:32:04,597: INFO: Booking created with ID: 5376
+2023-10-01 11:32:04,597: INFO: Test case for creating a booking completed
+2023-10-01 11:32:04,612: INFO: Starting the test case for creating a booking
+2023-10-01 11:32:04,612: INFO: Request URL: https://restful-booker.herokuapp.com/booking
+2023-10-01 11:32:06,234: INFO: Booking created with ID: 5391
+2023-10-01 11:32:06,234: INFO: Test case for creating a booking completed
+2023-10-01 11:32:06,243: INFO: Starting the test case for deleting a booking
+2023-10-01 11:32:06,243: INFO: Request URL: https://restful-booker.herokuapp.com/booking/5391
+2023-10-01 11:32:09,716: INFO: Test case for deleting a booking completed
+2023-10-01 11:32:09,716: INFO: Starting the test case for creating a booking
+2023-10-01 11:32:09,716: INFO: Request URL: https://restful-booker.herokuapp.com/booking
+2023-10-01 11:32:11,448: INFO: Booking created with ID: 5440
+2023-10-01 11:32:11,448: INFO: Test case for creating a booking completed
+2023-10-01 11:32:11,463: INFO: Starting the test case for getting a booking
+2023-10-01 11:32:11,463: INFO: Request URL: https://restful-booker.herokuapp.com/booking/5440
+2023-10-01 11:32:13,096: INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}
+2023-10-01 11:32:13,096: INFO: Test case for deleting a getting completed
+2023-10-01 11:32:13,096: INFO: Starting the test case for creating a booking
+2023-10-01 11:32:13,111: INFO: Request URL: https://restful-booker.herokuapp.com/booking
+2023-10-01 11:32:14,735: INFO: Booking created with ID: 5463
+2023-10-01 11:32:14,735: INFO: Test case for creating a booking completed
+2023-10-01 11:32:14,735: INFO: Starting the test case for updating a booking
+2023-10-01 11:32:14,735: INFO: Request URL: https://restful-booker.herokuapp.com/booking/5463
+2023-10-01 11:32:18,214: INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 1000, 'depositpaid': True, 'bookingdates': {'checkin': '2023-09-30', 'checkout': '2022-10-01'}, 'additionalneeds': 'Lunch'}
+2023-10-01 11:32:18,214: INFO: Test case for updating a booking completed
