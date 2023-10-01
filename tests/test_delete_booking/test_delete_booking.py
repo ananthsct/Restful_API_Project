@@ -11,7 +11,7 @@ def test_delete_booking(create_booking):
     DELETE_URL = DELETE_BOOKING_URL + str(create_booking)
     logger.info(f"Request URL: {DELETE_URL}")
 
-    # Send a PUT request to update a booking
+    # Send a DELETE request to delete a booking
     response = requests.delete(DELETE_URL, headers=delete_booking_header())
 
     # Check if the response status code is 201 for deleting content as per restful document

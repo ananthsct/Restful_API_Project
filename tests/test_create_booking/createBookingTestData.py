@@ -1,5 +1,4 @@
 def create_booking_data():
-    # In future you can replace this from the excel or JSON
     payload = {
         "firstname": "Ananth",
         "lastname": "kamaraj",

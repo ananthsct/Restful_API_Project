@@ -11,7 +11,7 @@ def test_get_booking(create_booking):
     GET_URL = GET_BOOKING_URL + str(create_booking)
     logger.info(f"Request URL: {GET_URL}")
 
-    # Send a PUT request to update a booking
+    # Send a GET request to get a booking
     response = requests.get(GET_URL, headers=get_booking_header())
 
     get_booking_response_data = response.json()
