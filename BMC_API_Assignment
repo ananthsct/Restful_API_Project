@@ -16,8 +16,8 @@ features.DetailedAPI documentation is available here.
 
 Notes
 ●	Please host the code in a Github repository
-●	Add logs &result file of execution along with code
-●	YourREADME should contain the following information:
+●	Add logs & result file of execution along with code
+●	Your README should contain the following information:
 ○	Clear instructions about executing the tests and details of any reports generated
 ○	Details of tools and frame works used
 ○	Assumptions made while developing the test cases
