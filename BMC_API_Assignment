@@ -1,0 +1,28 @@
+BMC API assignment
+
+
+ProblemStatement
+This assignment expects you to create an API testing framework for testing the following APIs exposed by Restful booker:
+●	CreateBooking
+●	GetBooking
+●	UpdateBooking
+●	DeleteBooking
+
+
+Restful-booker is a free CreateReadUpdateDelete WebAPI that comes with authentication
+
+features.DetailedAPI documentation is available here.
+
+
+Notes
+●	Please host the code in a Github repository
+●	Add logs &result file of execution along with code
+●	YourREADME should contain the following information:
+○	Clear instructions about executing the tests and details of any reports generated
+○	Details of tools and frame works used
+○	Assumptions made while developing the test cases
+●	Develop modular, clean, well-commented, production grade code
+
+
+Timeframe
+●	Time taken for completion of assignment is 2-4hours.
