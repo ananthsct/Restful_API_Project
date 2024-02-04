@@ -12,3 +12,6 @@ Open the generated HTML report in your web browser to view detailed test results
 ## Assumptions and Challenges
 1. Applying modular approach was challenging for first few functions
 2. Integrating custom-logs were challenging
+
+## Improvements needed
+1. Have to change absolute paths into relative paths to handle files
