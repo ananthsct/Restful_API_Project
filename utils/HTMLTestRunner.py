@@ -529,6 +529,8 @@ TestResult = unittest.TestResult
 
 
 class _TestResult(TestResult):
+    # note: _TestResult is a pure representation of results.
+    # It lacks the output and reporting ability compares to unittest._TextTestResult.
     def __init__(self, verbosity=1):
         super().__init__()
         self.outputBuffer = StringIO()
@@ -550,6 +552,10 @@ class _TestResult(TestResult):
         sys.stderr = stderr_redirector
 
     def complete_output(self):
+        """
+        Disconnect output redirection and return buffer.
+        Safe to call multiple times.
+        """
         if self.stdout0:
             sys.stdout = self.stdout0
             sys.stderr = self.stderr0
@@ -558,6 +564,9 @@ class _TestResult(TestResult):
         return self.outputBuffer.getvalue()
 
     def stopTest(self, test):
+        # Usually one of addSuccess, addError or addFailure would have been called.
+        # But there are some path in unittest that would bypass this.
+        # We must disconnect stdout in stopTest(), which is guaranteed to be called.
         self.complete_output()
 
     def addSuccess(self, test):
@@ -629,6 +638,10 @@ class HTMLTestRunner:
         return [(cls, rmap[cls]) for cls in classes]
 
     def getReportAttributes(self, result):
+        """
+        Return report attributes as a list of (name, value).
+        Override this to add custom attributes.
+        """
         startTime = str(self.startTime)[:19]
         duration = str(self.stopTime - self.startTime)
         status = []
@@ -766,7 +779,18 @@ class HTMLTestRunner:
         return self.template_mixin.ENDING_TMPL
 
 
+##############################################################################
+# Facilities for running tests from the command line
+##############################################################################
+
+# Note: Reuse unittest.TestProgram to launch test. In the future we may
+# build our own launcher to support more specific command line
+# parameters like test title, CSS, etc.
 class TestProgram(unittest.TestProgram):
+    """
+    A variation of the unittest.TestProgram. Please refer to the base
+    class for command line parameters.
+    """
     def __init__(
             self,
             module: None | str | ModuleType = ...,
@@ -799,12 +823,18 @@ class TestProgram(unittest.TestProgram):
         self.testRunner = None
 
     def runTests(self):
+        # Pick HTMLTestRunner as the default test runner.
+        # base class's testRunner parameter is not useful because it means
+        # we have to instantiate HTMLTestRunner before we know self.verbosity.
         if self.testRunner is None:
             self.testRunner = HTMLTestRunner(verbosity=self.verbosity)
         unittest.TestProgram.runTests(self)
 
 
 main = TestProgram
+##############################################################################
+# Executing this module from the command line
+##############################################################################
 
 if __name__ == "__main__":
     main(module=None)

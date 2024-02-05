@@ -1,5 +1,5 @@
 import unittest
-import HTMLTestRunner
+from utils import HTMLTestRunner
 from tests.test_create_booking.test_create_booking import TestMethod1_Create_Booking
 
 
@@ -13,7 +13,7 @@ def create_test_suite():
 
 if __name__ == '__main__':
     # Specify the file name for the HTML report
-    report_file = '../reports/my_report2.html'
+    report_file = 'reports/my_report3.html'
 
     # Use open() to create a file object in Python 3
     with open(report_file, 'wb') as fp:

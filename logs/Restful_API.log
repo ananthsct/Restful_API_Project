@@ -1,5 +1,5 @@
-2024-02-04 20:39:51,445: INFO: Starting the test case for creating a booking
-2024-02-04 20:39:51,446: INFO: Request URL: https://restful-booker.herokuapp.com/booking
-2024-02-04 20:39:52,552: INFO: Response data: {'bookingid': 3429, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
-2024-02-04 20:39:52,552: INFO: Booking created with ID: 3429
-2024-02-04 20:39:52,552: INFO: Test case for creating a booking completed
+2024-02-05 08:29:06,334: INFO: Starting the test case for creating a booking
+2024-02-05 08:29:06,335: INFO: Request URL: https://restful-booker.herokuapp.com/booking
+2024-02-05 08:29:07,405: INFO: Response data: {'bookingid': 4148, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
+2024-02-05 08:29:07,405: INFO: Booking created with ID: 4148
+2024-02-05 08:29:07,405: INFO: Test case for creating a booking completed
