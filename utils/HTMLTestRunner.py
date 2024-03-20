@@ -426,23 +426,22 @@ a.popup_link:hover {
     # Heading
     #
 
-    HEADING_TMPL = """<div class='heading' style='background-color: blue; color: white;>
-    <table class='domain-info'>
+    HEADING_TMPL = """<div class='heading' style='background-color: blue; color: white;'>
+    <table class='domain-info' style='width: 100%%'>
         <tr>
-            <td class='domain-info-column1'>WM Technology</td>
-            <td class='domain-info-column2' style='float: right;'>Dassault Systemes</td>
+            <td style='text-align: left; padding-right: 10px;'>WM Technology</td>
+            <td style='text-align: right; padding-left: 20px;'>Dassault Systemes</td>
         </tr>
     </table>
 <h1>%(title)s</h1>
 <p class='description'>%(description)s</p>
-<table class='disclaimer' style='background-color: grey; color: white;'>
+<table class='disclaimer' style='background-color: grey; color: white; width: 100%%'>
         <tr>
             <td style='text-align: left;'>The report is for internal purpose only and should not be redistributed</td>
             <td style='float: right;'>%(date)s</td>
         </tr>
     </table>
 </div>
-
 """  # variables: (title, parameters, description, date)
 
     HEADING_ATTRIBUTE_TMPL = """<p class='attribute'><strong>%(name)s:</strong> %(value)s</p>
