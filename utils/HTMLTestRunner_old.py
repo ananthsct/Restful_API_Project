@@ -312,13 +312,11 @@ function showOutput(id, name) {
 }
 */
 --></script>
-<!-- Container starts here -->
-<div class="container">
-    %(heading)s
-    %(report)s
-    %(ending)s
-</div>
-<!-- Container ends here -->
+
+%(heading)s
+%(report)s
+%(ending)s
+
 </body>
 </html>
 """
@@ -335,13 +333,7 @@ function showOutput(id, name) {
 body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
 table       { font-size: 100%; }
 pre         { }
-/* Outer rectangle border */
-.container {
-    border: 2px solid black;
-    padding: 20px;
-    max-width: 800px; /* Adjust the maximum width as needed */
-    margin-left: 20px; /* Align the container to the left */
-}
+
 /* -- heading ---------------------------------------------------------------------- */
 h1 {
 	font-size: 16pt;
@@ -391,7 +383,7 @@ a.popup_link:hover {
     margin-bottom: 1ex;
 }
 #result_table {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
     border: 1px solid #777;
 }
@@ -426,24 +418,13 @@ a.popup_link:hover {
     # Heading
     #
 
-    HEADING_TMPL = """<div class='heading' style='background-color: blue; color: white;>
-    <table class='domain-info'>
-        <tr>
-            <td class='domain-info-column1'>WM Technology</td>
-            <td class='domain-info-column2' style='float: right;'>Dassault Systemes</td>
-        </tr>
-    </table>
+    HEADING_TMPL = """<div class='heading'>
 <h1>%(title)s</h1>
+%(parameters)s
 <p class='description'>%(description)s</p>
-<table class='disclaimer' style='background-color: grey; color: white;'>
-        <tr>
-            <td style='text-align: left;'>The report is for internal purpose only and should not be redistributed</td>
-            <td style='float: right;'>%(date)s</td>
-        </tr>
-    </table>
 </div>
 
-"""  # variables: (title, parameters, description, date)
+"""  # variables: (title, parameters, description)
 
     HEADING_ATTRIBUTE_TMPL = """<p class='attribute'><strong>%(name)s:</strong> %(value)s</p>
 """  # variables: (name, value)
@@ -537,9 +518,7 @@ a.popup_link:hover {
     # ENDING
     #
 
-    ENDING_TMPL = """
-    %(parameters)s
-    <div id='ending'>&nbsp;</div>"""
+    ENDING_TMPL = """<div id='ending'>&nbsp;</div>"""
 
 
 # -------------------- The end of the Template class -------------------
@@ -630,7 +609,7 @@ class _TestResult(TestResult):
 
 
 class HTMLTestRunner:
-    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None, date=None):
+    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None):
         self.template_mixin = Template_mixin()
         self.stopTime = None
         self.stream = stream
@@ -638,7 +617,6 @@ class HTMLTestRunner:
         self.title = title or "Test Report"
         self.description = description or ""
         self.startTime = datetime.datetime.now()
-        self.date = date or ""
 
     def run(self, test):
         result = _TestResult(self.verbosity)
@@ -684,9 +662,9 @@ class HTMLTestRunner:
         report_attrs = self.getReportAttributes(result)
         generator = 'HTMLTestRunner %s' % __version__
         stylesheet = self._generate_stylesheet()
-        heading = self._generate_heading()
+        heading = self._generate_heading(report_attrs)
         report = self._generate_report(result)
-        ending = self._generate_ending(report_attrs)
+        ending = self._generate_ending()
         output = self.template_mixin.HTML_TMPL % dict(
             title=saxutils.escape(self.title),
             generator=generator,
@@ -703,12 +681,18 @@ class HTMLTestRunner:
     def _generate_stylesheet(self):
         return self.template_mixin.STYLESHEET_TMPL
 
-    def _generate_heading(self):
-
+    def _generate_heading(self, report_attrs):
+        a_lines = []
+        for name, value in report_attrs:
+            line = self.template_mixin.HEADING_ATTRIBUTE_TMPL % dict(
+                name=saxutils.escape(name),
+                value=saxutils.escape(value),
+            )
+            a_lines.append(line)
         heading = self.template_mixin.HEADING_TMPL % dict(
             title=saxutils.escape(self.title),
+            parameters=''.join(a_lines),
             description=saxutils.escape(self.description),
-            date=saxutils.escape(self.date),
         )
         return heading
 
@@ -791,17 +775,8 @@ class HTMLTestRunner:
         if not has_output:
             return
 
-    def _generate_ending(self, report_attrs):
-        a_lines = []
-        for name, value in report_attrs:
-            line = self.template_mixin.HEADING_ATTRIBUTE_TMPL % dict(
-                name=saxutils.escape(name),
-                value=saxutils.escape(value),
-            )
-            a_lines.append(line)
-        return self.template_mixin.ENDING_TMPL % dict(
-            parameters=''.join(a_lines)
-        )
+    def _generate_ending(self):
+        return self.template_mixin.ENDING_TMPL
 
 
 ##############################################################################
