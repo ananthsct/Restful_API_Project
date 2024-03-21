@@ -1,5 +1,10 @@
-2024-03-20 23:12:39,040: INFO: Starting the test case for creating a booking
-2024-03-20 23:12:39,040: INFO: Request URL: https://restful-booker.herokuapp.com/booking
-2024-03-20 23:12:39,933: INFO: Response data: {'bookingid': 602, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
-2024-03-20 23:12:39,933: INFO: Booking created with ID: 602
-2024-03-20 23:12:39,934: INFO: Test case for creating a booking completed
+2024-03-21 09:20:19,878: INFO: Starting the test case for creating a booking
+2024-03-21 09:20:19,879: INFO: Request URL: https://restful-booker.herokuapp.com/booking
+2024-03-21 09:20:20,852: INFO: Response data: {'bookingid': 5013, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
+2024-03-21 09:20:20,852: INFO: Booking created with ID: 5013
+2024-03-21 09:20:20,852: INFO: Test case for creating a booking completed
+2024-03-21 09:20:20,860: INFO: Starting the test case for creating a booking
+2024-03-21 09:20:20,861: INFO: Request URL: https://restful-booker.herokuapp.com/booking
+2024-03-21 09:20:22,127: INFO: Response data: {'bookingid': 5024, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
+2024-03-21 09:20:22,128: INFO: Booking created with ID: 5024
+2024-03-21 09:20:22,128: INFO: Test case for creating a booking completed

@@ -5,7 +5,7 @@ import unittest
 from io import StringIO
 from types import ModuleType
 from xml.sax import saxutils
-
+import traceback
 __version__ = "1.0"
 
 """
@@ -500,7 +500,7 @@ a.popup_link:hover {
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
-    <td colspan='5' align='center'>
+    <td colspan='3' align='center'>
 
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
@@ -516,10 +516,10 @@ a.popup_link:hover {
         </pre>
     </div>
     <!--css div popup end-->
-
     </td>
+    <td colspan='2' align='center'>%(duration)s</td>
 </tr>
-"""  # variables: (tid, Class, style, desc, status)
+"""  # variables: (tid, Class, style, desc, status, duration)
 
     REPORT_TEST_NO_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
@@ -773,22 +773,51 @@ class HTMLTestRunner:
         else:
             ue = str(e)
 
-        script = self.template_mixin.REPORT_TEST_OUTPUT_TMPL % dict(
-            id=tid,
-            output=saxutils.escape(uo + ue),
-        )
-
-        row = tmpl % dict(
-            tid=tid,
-            Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
-            style=n == 2 and 'errorClass' or n == 1 and 'failClass' or 'passClass',
-            desc=desc,
-            script=script,
-            status=self.template_mixin.STATUS[n],
-        )
-        rows.append(row)
-        if not has_output:
+        startTime = datetime.datetime.strptime(str(self.startTime)[:19], '%Y-%m-%d %H:%M:%S')
+        try:
+            t()
+        except Exception:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            stopTime = datetime.datetime.strptime(str(self.stopTime)[:19], '%Y-%m-%d %H:%M:%S')
+            duration_seconds = (stopTime - startTime).total_seconds()
+            # duration = round(duration_seconds, 4)
+            duration = duration_seconds
+            script = self.template_mixin.REPORT_TEST_OUTPUT_TMPL % dict(
+                id=tid,
+                output=saxutils.escape(''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))),
+            )
+            row = tmpl % dict(
+                tid=tid,
+                Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
+                style=n == 2 and 'errorClass' or n == 1 and 'failClass' or 'passClass',
+                desc=desc,
+                script=script,
+                status=self.template_mixin.STATUS[n],
+                duration=duration
+            )
+            rows.append(row)
             return
+        else:
+            stopTime = datetime.datetime.strptime(str(self.stopTime)[:19], '%Y-%m-%d %H:%M:%S')
+            duration_seconds = (stopTime - startTime).total_seconds()
+            # duration = round(duration_seconds, 4)
+            duration = duration_seconds
+            script = self.template_mixin.REPORT_TEST_OUTPUT_TMPL % dict(
+                id=tid,
+                output=saxutils.escape(uo + ue),
+            )
+            row = tmpl % dict(
+                tid=tid,
+                Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
+                style=n == 2 and 'errorClass' or n == 1 and 'failClass' or 'passClass',
+                desc=desc,
+                script=script,
+                status=self.template_mixin.STATUS[n],
+                duration=duration
+            )
+            rows.append(row)
+            if not has_output:
+                return
 
     def _generate_ending(self, report_attrs):
         a_lines = []
