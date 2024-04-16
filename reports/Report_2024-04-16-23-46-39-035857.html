@@ -248,11 +248,11 @@ function showOutput(id, name) {
 
 <tr class='passClass'>
     <td>tests.test_create_booking.test_create_booking.TestMethod1_Create_Booking</td>
-    <td>1</td>
-    <td>1</td>
+    <td>2</td>
+    <td>2</td>
     <td>0</td>
     <td>0</td>
-    <td><a href="javascript:showClassDetail('c1',1)">Detail</a></td>
+    <td><a href="javascript:showClassDetail('c1',2)">Detail</a></td>
 </tr>
 
 <tr id='pt1.1' class='none'>
@@ -270,14 +270,14 @@ function showOutput(id, name) {
         </div>
         <pre>
         
-pt1.1: Start_Time1:  2024-04-16 11:00:23.693355
+pt1.1: Start_Time1:  2024-04-16 23:46:30.390908
 INFO: Starting the test case for creating a booking
 INFO: Request URL: https://restful-booker.herokuapp.com/booking
-Create_Booking_Response_Time:  0.961625337600708
-INFO: Response_Time: 0.961625337600708
-INFO: Response data: {'bookingid': 4839, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
-INFO: Booking created with ID: 4839
-Booking created with ID: 4839
+Create_Booking_Response_Time:  1.9668834209442139
+INFO: Response_Time: 1.9668834209442139
+INFO: Response data: {'bookingid': 2466, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}}
+INFO: Booking created with ID: 2466
+Booking created with ID: 2466
 INFO: Test case for creating a booking completed
 
 
@@ -285,7 +285,34 @@ INFO: Test case for creating a booking completed
     </div>
     <!--css div popup end-->
     </td>
-    <td colspan='2' align='center'>0.96</td>
+    <td colspan='2' align='center'>None</td>
+</tr>
+
+<tr id='pt1.2' class='none'>
+    <td class='passClass'><div class='testcase'>test_sample</div></td>
+    <td colspan='3' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.2')" >
+        pass</a>
+
+    <div id='div_pt1.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.2: Start_Time1:  2024-04-16 23:46:32.360291
+Sample test case
+sample test ends
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <td colspan='2' align='center'>None</td>
 </tr>
 
 <tr class='passClass'>
@@ -312,14 +339,14 @@ INFO: Test case for creating a booking completed
         </div>
         <pre>
         
-pt2.1: Start_Time1:  2024-04-16 11:00:24.656973
+pt2.1: Start_Time1:  2024-04-16 23:46:33.361027
 INFO: Starting the test case for getting a booking
 INFO: Starting the test case for creating a booking
 INFO: Request URL: https://restful-booker.herokuapp.com/booking
-INFO: Booking created with ID: 4849
+INFO: Booking created with ID: 2481
 INFO: Test case for creating a booking completed
-INFO: Request URL: https://restful-booker.herokuapp.com/booking/4849
-Get_Booking_Response_Time:  0.9339005947113037
+INFO: Request URL: https://restful-booker.herokuapp.com/booking/2481
+Get_Booking_Response_Time:  0.913949728012085
 INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}
 Booking_response : {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch'}
 INFO: Test case for deleting a getting completed
@@ -329,7 +356,7 @@ INFO: Test case for deleting a getting completed
     </div>
     <!--css div popup end-->
     </td>
-    <td colspan='2' align='center'>0.96</td>
+    <td colspan='2' align='center'>None</td>
 </tr>
 
 <tr class='passClass'>
@@ -356,16 +383,16 @@ INFO: Test case for deleting a getting completed
         </div>
         <pre>
         
-pt3.1: Start_Time1:  2024-04-16 11:00:26.508036
+pt3.1: Start_Time1:  2024-04-16 23:46:35.196009
 INFO: Starting the test case for updating a booking
 INFO: Starting the test case for creating a booking
 INFO: Request URL: https://restful-booker.herokuapp.com/booking
-INFO: Booking created with ID: 4867
+INFO: Booking created with ID: 2497
 INFO: Test case for creating a booking completed
-INFO: Request URL: https://restful-booker.herokuapp.com/booking/4867
-7db607a4046625e
-{'Content-Type': 'application/json', 'Accept': 'application/json', 'Cookie': 'token=7db607a4046625e'}
-Update_Booking_Response_Time:  1.8272173404693604
+INFO: Request URL: https://restful-booker.herokuapp.com/booking/2497
+517162ec40e99f7
+{'Content-Type': 'application/json', 'Accept': 'application/json', 'Cookie': 'token=517162ec40e99f7'}
+Update_Booking_Response_Time:  2.9001872539520264
 INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 1000, 'depositpaid': True, 'bookingdates': {'checkin': '2023-09-30', 'checkout': '2022-10-01'}, 'additionalneeds': 'Lunch'}
 INFO: Test case for updating a booking completed
 
@@ -374,13 +401,13 @@ INFO: Test case for updating a booking completed
     </div>
     <!--css div popup end-->
     </td>
-    <td colspan='2' align='center'>0.96</td>
+    <td colspan='2' align='center'>None</td>
 </tr>
 
 <tr id='total_row'>
     <td>Total</td>
-    <td>3</td>
-    <td>3</td>
+    <td>4</td>
+    <td>4</td>
     <td>0</td>
     <td>0</td>
     <td>&nbsp;</td>
@@ -388,9 +415,9 @@ INFO: Test case for updating a booking completed
 </table>
 
             
-    <p class='attribute'><strong>Start Time:</strong> 2024-04-16 11:00:23</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:05.567573</p>
-<p class='attribute'><strong>Status:</strong> Pass 3</p>
+    <p class='attribute'><strong>Start Time:</strong> 2024-04-16 23:46:30</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:08.644949</p>
+<p class='attribute'><strong>Status:</strong> Pass 4</p>
 
     <div id='ending'>&nbsp;</div>
         </td>

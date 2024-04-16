@@ -41,6 +41,11 @@ class TestMethod1_Create_Booking(unittest.TestCase):
         print(f"Booking created with ID: {booking_id}")
         logger.info("Test case for creating a booking completed")
 
+    def test_sample(self):
+        print("Sample test case")
+        time.sleep(1)
+        print("sample test ends")
+
 
 if __name__ == "__main__":
     unittest.main()

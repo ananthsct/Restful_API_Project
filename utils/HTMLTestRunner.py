@@ -756,6 +756,7 @@ class HTMLTestRunner:
     def _generate_report(self, result):
         rows = []
         sortedResult = self.sortResult(result.result)
+        test_index = 0
         for cid, (cls, cls_results) in enumerate(sortedResult):
             np, nf, ne = 0, 0, 0
             for n, t, o, e in cls_results:
@@ -772,7 +773,6 @@ class HTMLTestRunner:
                 name = "%s.%s" % (cls.__module__, cls.__name__)
             doc = cls.__doc__ and cls.__doc__.split("\n")[0] or ""
             desc = doc and '%s: %s' % (name, doc) or name
-
             row = self.template_mixin.REPORT_CLASS_TMPL % dict(
                 style=ne > 0 and 'errorClass' or nf > 0 and 'failClass' or 'passClass',
                 desc=desc,
@@ -783,15 +783,14 @@ class HTMLTestRunner:
                 cid='c%s' % (cid + 1),
             )
             rows.append(row)
-
             durations = result.durations
-            print("All test durations: ", durations)
 
             for tid, (n, t, o, e) in enumerate(cls_results):
-                print(tid)
-                duration = durations[tid]
+                duration = durations[test_index]
+                test_index += 1
                 self._generate_report_test(rows, cid, tid, n, t, o, e, duration)
-                tid += 1
+
+                print("Test_Index:", test_index)
 
         report = self.template_mixin.REPORT_TMPL % dict(
             test_list=''.join(rows),
@@ -803,6 +802,7 @@ class HTMLTestRunner:
         return report
 
     def _generate_report_test(self, rows, cid, tid, n, t, o, e, duration):
+
         has_output = bool(o or e)
         tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid + 1, tid + 1)
         name = t.id().split('.')[-1]
