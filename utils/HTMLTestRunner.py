@@ -1,10 +1,12 @@
 import datetime
+import os
 import sys
 import time
 import unittest
 from io import StringIO
 from types import ModuleType
 from xml.sax import saxutils
+from pathlib import Path
 import traceback
 __version__ = "1.0"
 
@@ -140,17 +142,17 @@ class OutputRedirector(object):
         self.fp.flush()
 
 
-class StringIOOutputRedirector(OutputRedirector):
-    def __init__(self):
-        super().__init__(StringIO())
-
-    def getvalue(self):
-        return self.fp.getvalue()
+# class StringIOOutputRedirector(OutputRedirector):
+#     def __init__(self):
+#         super().__init__(StringIO())
+#
+#     def getvalue(self):
+#         return self.fp.getvalue()
 
 
 # Redirect sys.stdout and sys.stderr to capture output
-stdout_redirector = StringIOOutputRedirector()
-stderr_redirector = StringIOOutputRedirector()
+stdout_redirector = OutputRedirector(sys.stdout)
+stderr_redirector = OutputRedirector(sys.stderr)
 
 
 # ----------------------------------------------------------------------
@@ -313,11 +315,15 @@ function showOutput(id, name) {
 */
 --></script>
 <!-- Container starts here -->
-<div class="container">
-    %(heading)s
-    %(report)s
-    %(ending)s
-</div>
+<table border="0" cellspacing="0" cellpadding="0" width="1012" style="width:759.15pt;border-collapse:collapse;">
+    <tr>
+        <td style='border: 1px solid black; padding: 20px;'>
+            %(heading)s
+            %(report)s
+            %(ending)s
+        </td>
+    </tr>
+</table>
 <!-- Container ends here -->
 </body>
 </html>
@@ -335,33 +341,39 @@ function showOutput(id, name) {
 body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
 table       { font-size: 100%; }
 pre         { }
-/* Outer rectangle border */
-.container {
-    border: 2px solid black;
-    padding: 20px;
-    max-width: 800px; /* Adjust the maximum width as needed */
-    margin-left: 20px; /* Align the container to the left */
-}
 /* -- heading ---------------------------------------------------------------------- */
-h1 {
-	font-size: 16pt;
-	color: gray;
-}
 .heading {
-    margin-top: 0ex;
-    margin-bottom: 1ex;
-}
-
-.heading .attribute {
-    margin-top: 1ex;
-    margin-bottom: 0;
-}
-
-.heading .description {
-    margin-top: 4ex;
-    margin-bottom: 6ex;
-}
-
+            width: 100%;
+        } 
+        .domain-info {
+            background-color: #0B0B3B;
+            color: white;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .domain-info td {
+            padding: 10px;
+            text-align: left;
+            font-family: Arial;
+        }
+        .title {
+            font-size: 11pt;
+            font-family: Cambria;
+        }
+        .description {
+            font-size: 18pt;
+            font-family: Cambria;
+        }
+        .disclaimer {
+            background-color: grey;
+            color: white;
+        }
+        .disclaimer td {
+            padding: 10px;
+            text-align: left;
+            font-size: 8pt;
+            font-family: Arial;
+        }
 /* -- css div popup ------------------------------------------------------------------------ */
 a.popup_link {
 }
@@ -426,22 +438,25 @@ a.popup_link:hover {
     # Heading
     #
 
-    HEADING_TMPL = """<div class='heading' style='background-color: blue; color: white;'>
-    <table class='domain-info' style='width: 100%%'>
-        <tr>
-            <td style='text-align: left; padding-right: 10px;'>WM Technology</td>
-            <td style='text-align: right; padding-left: 20px;'>Dassault Systemes</td>
-        </tr>
-    </table>
-<h1>%(title)s</h1>
-<p class='description'>%(description)s</p>
-<table class='disclaimer' style='background-color: grey; color: white; width: 100%%'>
-        <tr>
-            <td style='text-align: left;'>The report is for internal purpose only and should not be redistributed</td>
-            <td style='float: right;'>%(date)s</td>
-        </tr>
-    </table>
-</div>
+    HEADING_TMPL = """
+    <div class='heading'>
+        <table class='domain-info'>
+            <tr>
+                <td style='font-size: 8.5pt;'>WM Technology</td>
+                <td style='text-align: right; font-size: 24.5pt;'>Dassault Systemes</td>
+            </tr>
+            <tr>
+                <td colspan="2" class='title'>%(title)s</td>
+            </tr>
+            <tr>
+                <td colspan="2" class='description'>%(description)s</td>
+            </tr>
+            <tr class='disclaimer'>
+                <td>The report is for internal purposes only and should not be redistributed</td>
+                <td style='text-align: right;'>%(date)s</td>
+            </tr>
+        </table> 
+    </div>
 """  # variables: (title, parameters, description, date)
 
     HEADING_ATTRIBUTE_TMPL = """<p class='attribute'><strong>%(name)s:</strong> %(value)s</p>
@@ -553,6 +568,9 @@ class _TestResult(TestResult):
     # It lacks the output and reporting ability compares to unittest._TextTestResult.
     def __init__(self, verbosity=1):
         super().__init__()
+        self._test_duration = None
+        self._test_end_time = None
+        self._test_start_time = None
         self.outputBuffer = StringIO()
         self.stdout0 = None
         self.stderr0 = None
@@ -561,6 +579,7 @@ class _TestResult(TestResult):
         self.error_count = 0
         self.verbosity = verbosity
         self.result = []
+        self.durations = []
 
     def startTest(self, test):
         super().startTest(test)
@@ -570,6 +589,10 @@ class _TestResult(TestResult):
         self.stderr0 = sys.stderr
         sys.stdout = stdout_redirector
         sys.stderr = stderr_redirector
+        self._test_start_time = datetime.datetime.now()
+        # formatted_start_time = self._test_start_time.strftime("%Y-%m-%d %H:%M:%S.%f")
+        # self._test_start_times.append(formatted_start_time)
+        print("Start_Time1: ", self._test_start_time)
 
     def complete_output(self):
         """
@@ -581,12 +604,22 @@ class _TestResult(TestResult):
             sys.stderr = self.stderr0
             self.stdout0 = None
             self.stderr0 = None
-        return self.outputBuffer.getvalue()
+            output = self.outputBuffer.getvalue()
+            self.outputBuffer = StringIO()
+            return output
+        return ""
 
     def stopTest(self, test):
         # Usually one of addSuccess, addError or addFailure would have been called.
         # But there are some path in unittest that would bypass this.
         # We must disconnect stdout in stopTest(), which is guaranteed to be called.
+        self._test_end_time = datetime.datetime.now()
+        self._test_duration = self._test_end_time - self._test_start_time
+        print("Start_Time2: ", self._test_start_time)
+        print("End_Time: ", self._test_end_time)
+        print("Duration: ", self._test_duration)
+        formatted_duration = round(self._test_duration.total_seconds(), 2)
+        self.durations.append(formatted_duration)
         self.complete_output()
 
     def addSuccess(self, test):
@@ -640,17 +673,20 @@ class HTMLTestRunner:
         self.date = date or ""
 
     def run(self, test):
+        self.startTime = datetime.datetime.now()
         result = _TestResult(self.verbosity)
         test(result)
         self.stopTime = datetime.datetime.now()
         self.generateReport(test, result)
-        print(sys.stderr, '\nTime Elapsed: %s' % (self.stopTime - self.startTime))
+        print('Time Elapsed: {}'.format((self.stopTime - self.startTime)), file=sys.stderr)
         return result
 
     def sortResult(self, result_list):
         rmap = {}
         classes = []
-        for n, t, o, e in result_list:
+        for result_item in result_list:
+            n, t, *oe = result_item
+            o, e = oe if len(oe) == 2 else ('', '')
             cls = t.__class__
             if cls not in rmap:
                 rmap[cls] = []
@@ -694,16 +730,22 @@ class HTMLTestRunner:
             report=report,
             ending=ending,
         )
-        # self.stream.write(str('utf8'))
-        # Encode the string 'utf-8' to bytes before writing to self.stream
-        self.stream.write(output.encode('utf-8'))
+        _date = str(datetime.datetime.now())
+        _str = str(Path(__file__).resolve().parents[1])
+        _path = os.path.join(_str, "reports")
+        _file = "Report_" + _date
+        new_file = _file.replace(' ', '-').replace('.', '-').replace(':', '-') + ".html"
+        filepath = os.path.join(_path, new_file)
+        print("File_Path: ", filepath)
+        outfile = open(filepath, 'w', encoding='utf-8')
+        outfile.write(str(output))
+        outfile.close()
 
 
     def _generate_stylesheet(self):
         return self.template_mixin.STYLESHEET_TMPL
 
     def _generate_heading(self):
-
         heading = self.template_mixin.HEADING_TMPL % dict(
             title=saxutils.escape(self.title),
             description=saxutils.escape(self.description),
@@ -742,8 +784,14 @@ class HTMLTestRunner:
             )
             rows.append(row)
 
+            durations = result.durations
+            print("All test durations: ", durations)
+
             for tid, (n, t, o, e) in enumerate(cls_results):
-                self._generate_report_test(rows, cid, tid, n, t, o, e)
+                print(tid)
+                duration = durations[tid]
+                self._generate_report_test(rows, cid, tid, n, t, o, e, duration)
+                tid += 1
 
         report = self.template_mixin.REPORT_TMPL % dict(
             test_list=''.join(rows),
@@ -754,7 +802,7 @@ class HTMLTestRunner:
         )
         return report
 
-    def _generate_report_test(self, rows, cid, tid, n, t, o, e):
+    def _generate_report_test(self, rows, cid, tid, n, t, o, e, duration):
         has_output = bool(o or e)
         tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid + 1, tid + 1)
         name = t.id().split('.')[-1]
@@ -772,52 +820,75 @@ class HTMLTestRunner:
             ue = e.decode('latin-1')
         else:
             ue = str(e)
-
-        startTime = datetime.datetime.strptime(str(self.startTime)[:19], '%Y-%m-%d %H:%M:%S')
-        try:
-            t()
-        except Exception:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            stopTime = datetime.datetime.strptime(str(self.stopTime)[:19], '%Y-%m-%d %H:%M:%S')
-            duration_seconds = (stopTime - startTime).total_seconds()
-            # duration = round(duration_seconds, 4)
-            duration = duration_seconds
-            script = self.template_mixin.REPORT_TEST_OUTPUT_TMPL % dict(
+        script = self.template_mixin.REPORT_TEST_OUTPUT_TMPL % dict(
                 id=tid,
-                output=saxutils.escape(''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))),
+                # output=saxutils.escape(''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))),
+                output=saxutils.escape(uo+ue),
             )
-            row = tmpl % dict(
-                tid=tid,
-                Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
-                style=n == 2 and 'errorClass' or n == 1 and 'failClass' or 'passClass',
-                desc=desc,
-                script=script,
-                status=self.template_mixin.STATUS[n],
-                duration=duration
-            )
-            rows.append(row)
+        print("Duration in report: ", duration)
+        row = tmpl % dict(
+            tid=tid,
+            Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
+            style=n == 2 and 'errorClass' or n == 1 and 'failClass' or 'passClass',
+            desc=desc,
+            script=script,
+            status=self.template_mixin.STATUS[n],
+            duration=duration
+        )
+        rows.append(row)
+        if not has_output:
             return
-        else:
-            stopTime = datetime.datetime.strptime(str(self.stopTime)[:19], '%Y-%m-%d %H:%M:%S')
-            duration_seconds = (stopTime - startTime).total_seconds()
-            # duration = round(duration_seconds, 4)
-            duration = duration_seconds
-            script = self.template_mixin.REPORT_TEST_OUTPUT_TMPL % dict(
-                id=tid,
-                output=saxutils.escape(uo + ue),
-            )
-            row = tmpl % dict(
-                tid=tid,
-                Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
-                style=n == 2 and 'errorClass' or n == 1 and 'failClass' or 'passClass',
-                desc=desc,
-                script=script,
-                status=self.template_mixin.STATUS[n],
-                duration=duration
-            )
-            rows.append(row)
-            if not has_output:
-                return
+
+        # startTime = datetime.datetime.now()
+        # print("Start_Time: ", startTime)
+
+        # try:
+        #     # t()
+        #     script = self.template_mixin.REPORT_TEST_OUTPUT_TMPL % dict(
+        #         id=tid,
+        #         # output=saxutils.escape(''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))),
+        #         output=saxutils.escape(uo + ue),
+        #     )
+        #     # print("Output: ", uo)
+        #     stopTime = datetime.datetime.now()
+        #     # print("Try_Stop_Time: ", stopTime)
+        #     duration_seconds = (stopTime - startTime).total_seconds()
+        #     # duration = round(duration_seconds, 4)
+        #     duration = duration_seconds
+        #     row = tmpl % dict(
+        #         tid=tid,
+        #         Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
+        #         style=n == 2 and 'errorClass' or n == 1 and 'failClass' or 'passClass',
+        #         desc=desc,
+        #         script=script,
+        #         status=self.template_mixin.STATUS[n],
+        #         duration=duration
+        #     )
+        #     rows.append(row)
+        #     return
+        # except Exception:
+        #     exc_type, exc_value, exc_traceback = sys.exc_info()
+        #     script = self.template_mixin.REPORT_TEST_OUTPUT_TMPL % dict(
+        #         id=tid,
+        #         output=saxutils.escape(''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))),
+        #         # output=saxutils.escape(uo+ue),
+        #     )
+        #     stopTime = datetime.datetime.now()
+        #     print("Except_Stop_Time: ", stopTime)
+        #     duration_seconds = (stopTime - startTime).total_seconds()
+        #     # duration = round(duration_seconds, 4)
+        #     duration = duration_seconds
+        #     row = tmpl % dict(
+        #         tid=tid,
+        #         Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
+        #         style=n == 2 and 'errorClass' or n == 1 and 'failClass' or 'passClass',
+        #         desc=desc,
+        #         script=script,
+        #         status=self.template_mixin.STATUS[n],
+        #         duration=duration
+        #     )
+        #     rows.append(row)
+        #     return
 
     def _generate_ending(self, report_attrs):
         a_lines = []
@@ -890,4 +961,4 @@ main = TestProgram
 ##############################################################################
 
 if __name__ == "__main__":
-    main(module=None)
+    unittest.main()

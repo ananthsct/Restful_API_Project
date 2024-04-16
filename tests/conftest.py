@@ -1,11 +1,12 @@
 import pytest
+import unittest
 import requests
 from config.config import *
 from utils.customlogger import LogGen
 from tests.test_create_booking.createBookingTestData import create_booking_data, create_booking_header
 
 
-@pytest.fixture
+# @pytest.fixture
 # Test case for creating a booking
 def create_booking():
     logger = LogGen.loggen()
@@ -25,4 +26,4 @@ def create_booking():
 
 
 if __name__ == "__main__":
-    create_booking()
+    unittest.main()
