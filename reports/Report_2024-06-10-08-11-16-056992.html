@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>My unit test</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.3"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+<style type="text/css" media="screen">
+body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
+table       { font-size: 100%; }
+pre         { }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+            width: 100%;
+        } 
+        .domain-info {
+            background-color: #0B0B3B;
+            color: white;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .domain-info td {
+            padding: 10px;
+            text-align: left;
+            font-family: Arial;
+        }
+        .title {
+            font-size: 11pt;
+            font-family: Cambria;
+        }
+        .description {
+            font-size: 18pt;
+            font-family: Cambria;
+        }
+        .disclaimer {
+            background-color: grey;
+            color: white;
+        }
+        .disclaimer td {
+            padding: 10px;
+            text-align: left;
+            font-size: 8pt;
+            font-family: Arial;
+        }
+/* -- css div popup ------------------------------------------------------------------------ */
+a.popup_link {
+}
+
+a.popup_link:hover {
+    color: red;
+}
+
+.popup_window {
+    display: none;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    /*border: solid #627173 1px; */
+    padding: 10px;
+    background-color: #E6E6D6;
+    font-family: "Lucida Console", "Courier New", Courier, monospace;
+    text-align: left;
+    font-size: 8pt;
+    width: 500px;
+}
+
+}
+/* -- report ------------------------------------------------------------------------ */
+#show_detail_line {
+    margin-top: 3ex;
+    margin-bottom: 1ex;
+}
+#result_table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #777;
+}
+#header_row {
+    font-weight: bold;
+    color: white;
+    background-color: #777;
+}
+#result_table td {
+    border: 1px solid #777;
+    padding: 2px;
+}
+#total_row  { font-weight: bold; }
+.passClass  { background-color: #6c6; }
+.failClass  { background-color: #c60; }
+.errorClass { background-color: #c00; }
+.passCase   { color: #6c6; }
+.failCase   { color: #c60; font-weight: bold; }
+.errorCase  { color: #c00; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+
+
+/* -- ending ---------------------------------------------------------------------- */
+#ending {
+}
+
+</style>
+
+</head>
+<body>
+<script language="javascript" type="text/javascript"><!--
+output_list = Array();
+
+/* level - 0:Summary; 1:Failed; 2:All */
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level < 1) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level > 1) {
+                tr.className = '';
+            }
+            else {
+                tr.className = 'hiddenRow';
+            }
+        }
+    }
+}
+
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        tid0 = 't' + cid.substr(1) + '.' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        if (toHide) {
+            document.getElementById('div_'+tid).style.display = 'none'
+            document.getElementById(tid).className = 'hiddenRow';
+        }
+        else {
+            document.getElementById(tid).className = '';
+        }
+    }
+}
+
+
+function showTestDetail(div_id){
+    var details_div = document.getElementById(div_id)
+    var displayState = details_div.style.display
+    // alert(displayState)
+    if (displayState != 'block' ) {
+        displayState = 'block'
+        details_div.style.display = 'block'
+    }
+    else {
+        details_div.style.display = 'none'
+    }
+}
+
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+
+/* obsoleted by detail in <div>
+function showOutput(id, name) {
+    var w = window.open("", //url
+                    name,
+                    "resizable,scrollbars,status,width=800,height=450");
+    d = w.document;
+    d.write("<pre>");
+    d.write(html_escape(output_list[id]));
+    d.write("\n");
+    d.write("<a href='javascript:window.close()'>close</a>\n");
+    d.write("</pre>\n");
+    d.close();
+}
+*/
+--></script>
+<!-- Container starts here -->
+<table border="0" cellspacing="0" cellpadding="0" width="1012" style="width:759.15pt;border-collapse:collapse;">
+    <tr>
+        <td style='border: 1px solid black; padding: 20px;'>
+            
+    <div class='heading'>
+        <table class='domain-info'>
+            <tr>
+                <td style='font-size: 8.5pt;'>WM Technology</td>
+                <td style='text-align: right; font-size: 24.5pt;'>Dassault Systemes</td>
+            </tr>
+            <tr>
+                <td colspan="2" class='title'>My unit test</td>
+            </tr>
+            <tr>
+                <td colspan="2" class='description'>This demonstrates the report output by HTMLTestRunner.</td>
+            </tr>
+            <tr class='disclaimer'>
+                <td>The report is for internal purposes only and should not be redistributed</td>
+                <td style='text-align: right;'>2024-06-10</td>
+            </tr>
+        </table> 
+    </div>
+
+            
+<p id='show_detail_line'>Show
+<a href='javascript:showCase(0)'>Summary</a>
+<a href='javascript:showCase(1)'>Failed</a>
+<a href='javascript:showCase(2)'>All</a>
+</p>
+<table id='result_table'>
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row'>
+    <td>Test Group/Test case</td>
+    <td>Count</td>
+    <td>Pass</td>
+    <td>Fail</td>
+    <td>Error</td>
+    <td>View</td>
+</tr>
+
+<tr class='passClass'>
+    <td>tests.test_create_booking.test_create_booking.TestMethod1_Create_Booking</td>
+    <td>2</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c1',2)">Detail</a></td>
+</tr>
+
+<tr id='pt1.1' class='none'>
+    <td class='passClass'><div class='testcase'>test_create_booking</div></td>
+    <td colspan='3' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
+        pass</a>
+
+    <div id='div_pt1.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.1: Start_Time1:  2024-06-10 08:11:09.178895
+INFO: Starting the test case for creating a booking
+INFO: Request URL: https://restful-booker.herokuapp.com/booking
+Create_Booking_Response_Time:  1.0274760723114014
+INFO: Response_Time: 1.0274760723114014
+INFO: Response data: {'bookingid': 4696, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch\n&lt;Key_point&gt;'}}
+INFO: Booking created with ID: 4696
+Booking created with ID: 4696
+INFO: Test case for creating a booking completed
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <td colspan='2' align='center'>1.03</td>
+</tr>
+
+<tr id='pt1.2' class='none'>
+    <td class='passClass'><div class='testcase'>test_sample</div></td>
+    <td colspan='3' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.2')" >
+        pass</a>
+
+    <div id='div_pt1.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.2: Start_Time1:  2024-06-10 08:11:10.210822
+Sample test case
+sample test ends
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <td colspan='2' align='center'>1.0</td>
+</tr>
+
+<tr class='passClass'>
+    <td>tests.test_get_booking.test_get_booking.TestMethod2_Get_Booking</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c2',1)">Detail</a></td>
+</tr>
+
+<tr id='pt2.1' class='none'>
+    <td class='passClass'><div class='testcase'>test_get_booking</div></td>
+    <td colspan='3' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.1')" >
+        pass</a>
+
+    <div id='div_pt2.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt2.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt2.1: Start_Time1:  2024-06-10 08:11:11.211581
+INFO: Starting the test case for getting a booking
+INFO: Starting the test case for creating a booking
+INFO: Request URL: https://restful-booker.herokuapp.com/booking
+INFO: Booking created with ID: 4709
+INFO: Test case for creating a booking completed
+INFO: Request URL: https://restful-booker.herokuapp.com/booking/4709
+Get_Booking_Response_Time:  0.9548544883728027
+INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch\n&lt;Key_point&gt;'}
+Booking_response : {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch\n&lt;Key_point&gt;'}
+INFO: Test case for deleting a getting completed
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <td colspan='2' align='center'>1.94</td>
+</tr>
+
+<tr class='passClass'>
+    <td>tests.test_update_booking.test_update_booking.TestMethod3_Update_Booking</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c3',1)">Detail</a></td>
+</tr>
+
+<tr id='pt3.1' class='none'>
+    <td class='passClass'><div class='testcase'>test_update_booking</div></td>
+    <td colspan='3' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.1')" >
+        pass</a>
+
+    <div id='div_pt3.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt3.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt3.1: Start_Time1:  2024-06-10 08:11:13.148710
+INFO: Starting the test case for updating a booking
+INFO: Starting the test case for creating a booking
+INFO: Request URL: https://restful-booker.herokuapp.com/booking
+INFO: Booking created with ID: 4722
+INFO: Test case for creating a booking completed
+INFO: Request URL: https://restful-booker.herokuapp.com/booking/4722
+cdeb9b56fc3b02e
+{'Content-Type': 'application/json', 'Accept': 'application/json', 'Cookie': 'token=cdeb9b56fc3b02e'}
+Update_Booking_Response_Time:  1.9165046215057373
+INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 1000, 'depositpaid': True, 'bookingdates': {'checkin': '2023-09-30', 'checkout': '2022-10-01'}, 'additionalneeds': 'Lunch'}
+INFO: Test case for updating a booking completed
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <td colspan='2' align='center'>2.91</td>
+</tr>
+
+<tr id='total_row'>
+    <td>Total</td>
+    <td>4</td>
+    <td>4</td>
+    <td>0</td>
+    <td>0</td>
+    <td>&nbsp;</td>
+</tr>
+</table>
+
+            
+    <p class='attribute'><strong>Start Time:</strong> 2024-06-10 08:11:09</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:06.878097</p>
+<p class='attribute'><strong>Status:</strong> Pass 4</p>
+
+    <div id='ending'>&nbsp;</div>
+        </td>
+    </tr>
+</table>
+<!-- Container ends here -->
+</body>
+</html>

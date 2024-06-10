@@ -590,8 +590,6 @@ class _TestResult(TestResult):
         sys.stdout = stdout_redirector
         sys.stderr = stderr_redirector
         self._test_start_time = datetime.datetime.now()
-        # formatted_start_time = self._test_start_time.strftime("%Y-%m-%d %H:%M:%S.%f")
-        # self._test_start_times.append(formatted_start_time)
         print("Start_Time1: ", self._test_start_time)
 
     def complete_output(self):
@@ -673,7 +671,6 @@ class HTMLTestRunner:
         self.date = date or ""
 
     def run(self, test):
-        self.startTime = datetime.datetime.now()
         result = _TestResult(self.verbosity)
         test(result)
         self.stopTime = datetime.datetime.now()
@@ -741,7 +738,6 @@ class HTMLTestRunner:
         outfile.write(str(output))
         outfile.close()
 
-
     def _generate_stylesheet(self):
         return self.template_mixin.STYLESHEET_TMPL
 
@@ -802,7 +798,6 @@ class HTMLTestRunner:
         return report
 
     def _generate_report_test(self, rows, cid, tid, n, t, o, e, duration):
-
         has_output = bool(o or e)
         tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid + 1, tid + 1)
         name = t.id().split('.')[-1]

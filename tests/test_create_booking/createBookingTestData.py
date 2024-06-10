@@ -8,7 +8,7 @@ def create_booking_data():
             "checkin": "2022-01-01",
             "checkout": "2022-01-01"
         },
-        "additionalneeds": "Lunch"
+        "additionalneeds": "Lunch\n<Key_point>"
     }
     return payload
 
