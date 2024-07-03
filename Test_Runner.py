@@ -5,7 +5,7 @@ from tests.test_create_booking.test_create_booking import TestMethod1_Create_Boo
 from tests.test_get_booking.test_get_booking import TestMethod2_Get_Booking
 from tests.test_update_booking.test_update_booking import TestMethod3_Update_Booking
 from datetime import datetime
-
+from utils.payload_rfb import step_list
 
 # Create a test suite
 # def create_test_suite():
@@ -30,15 +30,14 @@ if __name__ == '__main__':
         test.addTest(test_loader.loadTestsFromTestCase(test_case))
     suite.addTest(test)
     html_runner = HTMLTestRunner.HTMLTestRunner(verbosity=1, title='My unit test',
-                                                    description='This demonstrates the report output by HTMLTestRunner.',
-                                                    date=today_date)
-    print(html_runner)
+                                                description='This demonstrates the report output by HTMLTestRunner.',
+                                                date=today_date)
     start_time = datetime.now()
     result = html_runner.run(suite)
     end_time = datetime.now()
-    print(end_time - start_time)
+    print("Step list received: ", step_list)
+    print("Time taken", end_time - start_time)
     print(result)
     # Run the test suite using the TextTestRunner
     # runner = unittest.TextTestRunner()
     # runner.run(api_test_suite)
-

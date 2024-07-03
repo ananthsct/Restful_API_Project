@@ -25,7 +25,7 @@ class TestMethod1_Create_Booking(unittest.TestCase):
         print("Create_Booking_Response_Time: ", response_time)
         logger.info(f"Response_Time: {response_time}")
         # Check if the response status code is 200 (OK) or 201 (Created)
-        assert response.status_code in [200, 201], f"Failed to create booking. Status code: {response.status_code}"
+        assert response.status_code in [300, 201], f"Failed to create booking. Status code: {response.status_code}"
 
         # Parse the response JSON
         booking_response_data = response.json()

@@ -217,7 +217,7 @@ function showOutput(id, name) {
             </tr>
             <tr class='disclaimer'>
                 <td>The report is for internal purposes only and should not be redistributed</td>
-                <td style='text-align: right;'>2024-06-10</td>
+                <td style='text-align: right;'>2024-07-04</td>
             </tr>
         </table> 
     </div>
@@ -246,46 +246,47 @@ function showOutput(id, name) {
     <td>View</td>
 </tr>
 
-<tr class='passClass'>
+<tr class='failClass'>
     <td>tests.test_create_booking.test_create_booking.TestMethod1_Create_Booking</td>
     <td>2</td>
-    <td>2</td>
-    <td>0</td>
+    <td>1</td>
+    <td>1</td>
     <td>0</td>
     <td><a href="javascript:showClassDetail('c1',2)">Detail</a></td>
 </tr>
 
-<tr id='pt1.1' class='none'>
-    <td class='passClass'><div class='testcase'>test_create_booking</div></td>
+<tr id='ft1.1' class='failCase'>
+    <td class='failClass'><div class='testcase'>test_create_booking</div></td>
     <td colspan='3' align='center'>
 
     <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
-        pass</a>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.1')" >
+        fail</a>
 
-    <div id='div_pt1.1' class="popup_window">
+    <div id='div_ft1.1' class="popup_window">
         <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.1').style.display = 'none' " >
            [x]</a>
         </div>
         <pre>
         
-pt1.1: Start_Time1:  2024-06-10 08:18:29.331652
+ft1.1: Start_Time1:  2024-07-04 01:08:59.384824
 INFO: Starting the test case for creating a booking
 INFO: Request URL: https://restful-booker.herokuapp.com/booking
-Create_Booking_Response_Time:  0.9983770847320557
-INFO: Response_Time: 0.9983770847320557
-INFO: Response data: {'bookingid': 3420, 'booking': {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch\n&lt;Key_point&gt;'}}
-INFO: Booking created with ID: 3420
-Booking created with ID: 3420
-INFO: Test case for creating a booking completed
+Create_Booking_Response_Time:  1.1304504871368408
+INFO: Response_Time: 1.1304504871368408
+Traceback (most recent call last):
+  File "C:\Users\keert\PycharmProjects\Restful_API_Project\tests\test_create_booking\test_create_booking.py", line 28, in test_create_booking
+    assert response.status_code in [300, 201], f"Failed to create booking. Status code: {response.status_code}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Failed to create booking. Status code: 200
 
 
         </pre>
     </div>
     <!--css div popup end-->
     </td>
-    <td colspan='2' align='center'>1.0</td>
+    <td colspan='2' align='center'>1.13</td>
 </tr>
 
 <tr id='pt1.2' class='none'>
@@ -303,7 +304,7 @@ INFO: Test case for creating a booking completed
         </div>
         <pre>
         
-pt1.2: Start_Time1:  2024-06-10 08:18:30.333946
+pt1.2: Start_Time1:  2024-07-04 01:09:00.518419
 Sample test case
 sample test ends
 
@@ -339,14 +340,14 @@ sample test ends
         </div>
         <pre>
         
-pt2.1: Start_Time1:  2024-06-10 08:18:31.335377
+pt2.1: Start_Time1:  2024-07-04 01:09:01.519472
 INFO: Starting the test case for getting a booking
 INFO: Starting the test case for creating a booking
 INFO: Request URL: https://restful-booker.herokuapp.com/booking
-INFO: Booking created with ID: 3464
+INFO: Booking created with ID: 3605
 INFO: Test case for creating a booking completed
-INFO: Request URL: https://restful-booker.herokuapp.com/booking/3464
-Get_Booking_Response_Time:  0.9542219638824463
+INFO: Request URL: https://restful-booker.herokuapp.com/booking/3605
+Get_Booking_Response_Time:  1.2281920909881592
 INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch\n&lt;Key_point&gt;'}
 Booking_response : {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 432, 'depositpaid': True, 'bookingdates': {'checkin': '2022-01-01', 'checkout': '2022-01-01'}, 'additionalneeds': 'Lunch\n&lt;Key_point&gt;'}
 INFO: Test case for deleting a getting completed
@@ -356,7 +357,7 @@ INFO: Test case for deleting a getting completed
     </div>
     <!--css div popup end-->
     </td>
-    <td colspan='2' align='center'>1.95</td>
+    <td colspan='2' align='center'>2.46</td>
 </tr>
 
 <tr class='passClass'>
@@ -383,16 +384,16 @@ INFO: Test case for deleting a getting completed
         </div>
         <pre>
         
-pt3.1: Start_Time1:  2024-06-10 08:18:33.289989
+pt3.1: Start_Time1:  2024-07-04 01:09:03.983603
 INFO: Starting the test case for updating a booking
 INFO: Starting the test case for creating a booking
 INFO: Request URL: https://restful-booker.herokuapp.com/booking
-INFO: Booking created with ID: 3501
+INFO: Booking created with ID: 3632
 INFO: Test case for creating a booking completed
-INFO: Request URL: https://restful-booker.herokuapp.com/booking/3501
-d297ad71551283a
-{'Content-Type': 'application/json', 'Accept': 'application/json', 'Cookie': 'token=d297ad71551283a'}
-Update_Booking_Response_Time:  1.9097223281860352
+INFO: Request URL: https://restful-booker.herokuapp.com/booking/3632
+f7e4c652ba681d1
+{'Content-Type': 'application/json', 'Accept': 'application/json', 'Cookie': 'token=f7e4c652ba681d1'}
+Update_Booking_Response_Time:  2.455070972442627
 INFO: Response data: {'firstname': 'Ananth', 'lastname': 'kamaraj', 'totalprice': 1000, 'depositpaid': True, 'bookingdates': {'checkin': '2023-09-30', 'checkout': '2022-10-01'}, 'additionalneeds': 'Lunch'}
 INFO: Test case for updating a booking completed
 
@@ -401,23 +402,23 @@ INFO: Test case for updating a booking completed
     </div>
     <!--css div popup end-->
     </td>
-    <td colspan='2' align='center'>2.86</td>
+    <td colspan='2' align='center'>3.69</td>
 </tr>
 
 <tr id='total_row'>
     <td>Total</td>
     <td>4</td>
-    <td>4</td>
-    <td>0</td>
+    <td>3</td>
+    <td>1</td>
     <td>0</td>
     <td>&nbsp;</td>
 </tr>
 </table>
 
             
-    <p class='attribute'><strong>Start Time:</strong> 2024-06-10 08:18:29</p>
-<p class='attribute'><strong>Duration:</strong> 0:00:06.823686</p>
-<p class='attribute'><strong>Status:</strong> Pass 4</p>
+    <p class='attribute'><strong>Start Time:</strong> 2024-07-04 01:08:59</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:08.284545</p>
+<p class='attribute'><strong>Status:</strong> Pass 3 Failure 1</p>
 
     <div id='ending'>&nbsp;</div>
         </td>

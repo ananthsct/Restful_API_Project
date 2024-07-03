@@ -3,10 +3,12 @@ import os
 import sys
 import time
 import unittest
+import re
 from io import StringIO
 from types import ModuleType
 from xml.sax import saxutils
 from pathlib import Path
+from . import payload_rfb
 import traceback
 __version__ = "1.0"
 
@@ -613,9 +615,9 @@ class _TestResult(TestResult):
         # We must disconnect stdout in stopTest(), which is guaranteed to be called.
         self._test_end_time = datetime.datetime.now()
         self._test_duration = self._test_end_time - self._test_start_time
-        print("Start_Time2: ", self._test_start_time)
-        print("End_Time: ", self._test_end_time)
-        print("Duration: ", self._test_duration)
+        # print("Start_Time2: ", self._test_start_time)
+        # print("End_Time: ", self._test_end_time)
+        # print("Duration: ", self._test_duration)
         formatted_duration = round(self._test_duration.total_seconds(), 2)
         self.durations.append(formatted_duration)
         self.complete_output()
@@ -786,7 +788,7 @@ class HTMLTestRunner:
                 test_index += 1
                 self._generate_report_test(rows, cid, tid, n, t, o, e, duration)
 
-                print("Test_Index:", test_index)
+                # print("Test_Index:", test_index)
 
         report = self.template_mixin.REPORT_TMPL % dict(
             test_list=''.join(rows),
@@ -820,7 +822,14 @@ class HTMLTestRunner:
                 # output=saxutils.escape(''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))),
                 output=saxutils.escape(uo+ue),
             )
-        print("Duration in report: ", duration)
+        # Extract AssertionError message
+        assertion_message = ""
+        if 'AssertionError' in uo or 'AssertionError' in ue:
+            error_output = uo if 'AssertionError' in uo else ue
+            match = re.search(r'AssertionError: (.*)', error_output)
+            if match:
+                assertion_message = match.group(1)
+        # print("Duration in report: ", duration)
         row = tmpl % dict(
             tid=tid,
             Class=(n == 2 and 'errorCase' or n == 1 and 'failCase' or 'none'),
@@ -830,6 +839,9 @@ class HTMLTestRunner:
             status=self.template_mixin.STATUS[n],
             duration=duration
         )
+        if str(self.template_mixin.STATUS[n]) in ['pass', 'fail', 'error']:
+            payload_rfb.test_result(str(self.template_mixin.STATUS[n]), desc, duration, assertion_message)
+            # print("Test result function executed")
         rows.append(row)
         if not has_output:
             return
